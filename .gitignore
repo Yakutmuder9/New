@@ -1,3 +1,4 @@
-/node_modules
-.gitiginore
+node_modules/
 .env
+logs/
+text.txt
