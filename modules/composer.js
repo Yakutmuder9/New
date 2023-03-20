@@ -6,13 +6,18 @@
 ; Description: Composer API
 ;===========================================
 */
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const composerSchema = new mongoose.Schema({
-    name: String,
-    birthYear: Number,
-    deathYear: Number,
-    nationality: String,
+  name: {
+    type: String,
+    required: true,
+  },
+  birthYear: Number,
+  deathYear: Number,
+  nationality: String,
 });
 
-export default mongoose.model("Composer", composerSchema);
+const Composer = mongoose.model('Composer', composerSchema);
+
+export default Composer;

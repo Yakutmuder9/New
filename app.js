@@ -12,7 +12,7 @@ import express from "express";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import mongoose from "mongoose";
-import router from "./routes/composer.js";
+import composerRouter from "./routes/composer.js";
 
 // Constatnt
 const app = express();
@@ -40,6 +40,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
+app.use('/composers', composerRouter);
+
 const swaggerOptions = {
   swaggerDefinition: {
     openapi: "3.0.0",
@@ -48,12 +50,12 @@ const swaggerOptions = {
       version: "1.0.0",
     },
   },
-  apis: ["app.js"],
+  apis: ["./routes/*.js"],
 };
 
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-app.use("/composer", router);
+
 
 // start the server
 app.listen(port, () => {
