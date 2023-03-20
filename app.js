@@ -10,12 +10,8 @@ const swaggerOptions = {
   swaggerDefinition: {
     openapi: "3.0.0",
     info: {
-        title: "WEB 420 Restful APIs",
-        version: "1.0.0",
-      description: "Customer API Information",
-      contact: {
-        name: "Amazing Developer",
-      },
+      title: "WEB 420 Restful APIs",
+      version: "1.0.0",
     },
   },
   apis: ["app.js"],
@@ -26,5 +22,5 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-    console.log(`Application started and listening on port ${port}!`);
+  console.log(`Application started and listening on port ${port}!`);
 });
