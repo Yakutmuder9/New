@@ -141,15 +141,6 @@ router.get("/:id", async (req, res) => {
  *         description: Internal server error
  */
 
-// Create a new composer
-router.post("/", async (req, res) => {
-  try {
-    const composer = await Composer.create(req.body);
-    res.status(201).json(composer);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-});
 
 router.post("/", async (req, res) => {
   const composer = new Composer({
