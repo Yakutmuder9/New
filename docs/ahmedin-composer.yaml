@@ -10,10 +10,11 @@ paths:
     get:
       tags:
         - Composers
-      summary: Find all composers
+      summary: returns a list of composers documents
+      description: API for returning a list of composers from MongoDB Atlas
       responses:
         '200':
-          description: OK
+          description: Composer documnets
         '500':
           description: Server Exception
         '501':
@@ -21,11 +22,12 @@ paths:
     post:
       tags:
         - Composers
-      summary: Create a composer
+      summary: Creates a new composer object
+      description: API for adding new composer object
       requestBody:
-        required: true
         content:
           application/json:
+          description: Composer's information
             schema:
               type: object
               properties:
@@ -35,7 +37,7 @@ paths:
                   type: string
       responses:
         '200':
-          description: OK
+          description: User added
         '500':
           description: Server Exception
         '501':
@@ -45,16 +47,19 @@ paths:
     get:
       tags:
         - Composers
-      summary: Find a composer by ID
+      summary: returns a composer document
+      description: API for returning a single composer object from MongoDB
       parameters:
         - in: path
           name: id
           required: true
+          description: The composerId requestred by the user.
           schema:
             type: string
+          x-placeholder: id - The composerId requested by the user.
       responses:
         '200':
-          description: OK
+          description: Composer document in JSON format
         '500':
           description: Server Exception
         '501':

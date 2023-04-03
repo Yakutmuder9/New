@@ -9,10 +9,11 @@
 import * as dotenv from "dotenv";
 import cors from "cors";
 import express from "express";
-import swaggerJSDoc from "swagger-jsdoc";
+// import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import mongoose from "mongoose";
-import composerRouter from "./routes/composer.js";
+import YAML from "yamljs"; 
+import composerRouter from "./routes/composer.js"; 
 
 // Constatnt
 const app = express();
@@ -42,19 +43,20 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use('/composers', composerRouter);
 
-const swaggerOptions = {
-  swaggerDefinition: {
-    openapi: "3.0.0",
-    info: {
-      title: "WEB 420 Restful APIs",
-      version: "1.0.0",
-    },
-  },
-  apis: ["./routes/*.js"],
-};
+// const swaggerOptions = {
+//   swaggerDefinition: {
+//     openapi: "3.0.0",
+//     info: {
+//       title: "WEB 420 Restful APIs",
+//       version: "1.0.0",
+//     },
+//   },
+//   apis: ["./routes/*.js"],
+// };
 
-const swaggerDocs = swaggerJSDoc(swaggerOptions);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+// const swaggerDocs = swaggerJSDoc(swaggerOptions);
+const swaggerDocument = YAML.load("./docs/ahmedin-composer.yaml");
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
 // start the server
