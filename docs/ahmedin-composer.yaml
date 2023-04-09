@@ -4,20 +4,19 @@ info:
   title: Composer API
   version: 1.0.0
   description: API for managing composers
-
 paths:
-  /composers:
+  /api/composers:
     get:
       tags:
         - Composers
       summary: returns a list of composers documents
       description: API for returning a list of composers from MongoDB Atlas
       responses:
-        '200':
+        "200":
           description: Composer documnets
-        '500':
+        "500":
           description: Server Exception
-        '501':
+        "501":
           description: MongoDB Exception
     post:
       tags:
@@ -25,25 +24,20 @@ paths:
       summary: Creates a new composer object
       description: API for adding new composer object
       requestBody:
+        description: The composer to create
+        required: true
         content:
           application/json:
-          description: Composer's information
             schema:
-              type: object
-              properties:
-                firstName:
-                  type: string
-                lastName:
-                  type: string
+              $ref: '#/components/schemas/Composer'
       responses:
-        '200':
+        "200":
           description: User added
-        '500':
+        "500":
           description: Server Exception
-        '501':
+        "501":
           description: MongoDB Exception
-
-  /composers/{id}:
+  /api/composers/{id}:
     get:
       tags:
         - Composers
@@ -56,11 +50,10 @@ paths:
           description: The composerId requestred by the user.
           schema:
             type: string
-          x-placeholder: id - The composerId requested by the user.
       responses:
-        '200':
+        "200":
           description: Composer document in JSON format
-        '500':
+        "500":
           description: Server Exception
-        '501':
+        "501":
           description: MongoDB Exception
