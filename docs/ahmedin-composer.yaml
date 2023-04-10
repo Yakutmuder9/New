@@ -1,26 +1,31 @@
 openapi: 3.0.0
-
 info:
-  title: Composer API
+  title: Composers API
   version: 1.0.0
   description: API for managing composers
+
 paths:
   /api/composers:
     get:
       tags:
-        - Composers
+        - composers
       summary: returns a list of composers documents
       description: API for returning a list of composers from MongoDB Atlas
       responses:
-        "200":
-          description: Composer documnets
-        "500":
-          description: Server Exception
-        "501":
-          description: MongoDB Exception
+        '200':
+          description: A list of composers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Composer'
+        '500':
+          description: Internal server error
     post:
+      summary: Creates a new composer
       tags:
-        - Composers
+        - composers
       summary: Creates a new composer object
       description: API for adding new composer object
       requestBody:
@@ -29,31 +34,73 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Composer'
+              $ref: '#/components/schemas/ComposerRequest'
       responses:
-        "200":
+        '200':
           description: User added
-        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Composer'
+        '500':
           description: Server Exception
-        "501":
+        '501':
           description: MongoDB Exception
+
   /api/composers/{id}:
     get:
+      summary: Returns a composer by ID
       tags:
-        - Composers
+        - composers
       summary: returns a composer document
-      description: API for returning a single composer object from MongoDB
+      description: API for returning a single composer object 
       parameters:
         - in: path
           name: id
-          required: true
           description: The composerId requestred by the user.
+          required: true
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: Composer document in JSON format
-        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Composer'
+        '500':
           description: Server Exception
-        "501":
+        '501':
           description: MongoDB Exception
+
+components:
+  schemas:
+    Composer:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: '6110a07ebfab6e2e6d25ad16'
+        firstName:
+          type: string
+          example: 'Karen'
+        lastName:
+          type: string
+          example: 'Cmaro'
+      required:
+        - _id
+        - firstName
+        - lastName
+
+    ComposerRequest:
+      type: object
+      properties:
+        firstName:
+          type: string
+          example: 'Jone'
+        lastName:
+          type: string
+          example: 'Doe'
+      required:
+        - firstName
+        - lastName
