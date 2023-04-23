@@ -46,7 +46,7 @@
  *           type: string
  */
 import express from 'express';
-import Person from '../models/ahmedin-person.js';
+import Person from '../models/ahmedin-person.js'; 
 
 const router = express.Router();
 

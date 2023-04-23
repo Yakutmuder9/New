@@ -15,6 +15,7 @@ import YAML from "yamljs";
 import swaggerJSDoc from "swagger-jsdoc";
 import composerRouter from "./routes/ahmedin-composer-routes.js"; 
 import personRouter from "./routes/ahmedin-person-routes.js";
+import userRouter from "./routes/ahmedin-session-routes.js";
 
 // Middleware
 dotenv.config();
@@ -46,6 +47,7 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use('/api/composers', composerRouter);
 app.use('/api/persons', personRouter);
+app.use('/api', userRouter);
 
 const swaggerOptions = {
   swaggerDefinition: {
@@ -64,7 +66,7 @@ const swaggerDocs = swaggerJSDoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 
-// start the server
+// start the server 
 app.listen(port, () => {
   console.log(`Application started and listening on port ${port}!`);
 });
