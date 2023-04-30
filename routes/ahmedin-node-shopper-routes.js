@@ -54,11 +54,14 @@ const router = express.Router();
 
 router.post("/", async (req, res) => {
   try {
+    // Construct a new customer object
     const newCustomer = {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       userName: req.body.userName,
     };
+
+    // Save the new customer object
     await Customer.create(newCustomer);
     res.status(200).send("Customer added to MongoDB");
   } catch (err) {
@@ -105,8 +108,6 @@ router.post("/", async (req, res) => {
  *                 example: '12/10/2022'
  *               lineItems:
  *                 type: array
- *                 items:
- *                   type: object
  *     responses:
  *       '200':
  *         description: Customer added to MongoDB.
@@ -119,7 +120,10 @@ router.post("/", async (req, res) => {
 // Create a new invoice for the given username
 router.post("/:username/invoices", async (req, res) => {
   try {
+    // Find the customer by username
     const customer = await Customer.findOne({ userName: req.params.username });
+
+    // If no customer is found, send a 404 error
     if (!customer) {
       res
         .status(404)
@@ -127,6 +131,7 @@ router.post("/:username/invoices", async (req, res) => {
       return;
     }
 
+    // Construct a new invoice object from the request body
     const newInvoice = {
       subtotal: parseFloat(req.body.subtotal),
       tax: parseFloat(req.body.tax),
@@ -134,6 +139,8 @@ router.post("/:username/invoices", async (req, res) => {
       dateShipped: req.body.dateShipped,
       lineItems: req.body.lineItems,
     };
+
+    // Add the new invoice to the customer's list
     customer.invoices.push(newInvoice);
     const savedCustomer = await customer.save();
     res.status(200).json(savedCustomer);
@@ -172,13 +179,16 @@ router.post("/:username/invoices", async (req, res) => {
 // Find all invoices for the given username
 router.get("/:username/invoices", async (req, res) => {
   try {
+    // Find the customer by username
     const customer = await Customer.findOne({ userName: req.params.username });
+    // check if the customer is found in DB
     if (!customer) {
       res
         .status(404)
         .send(`No customer found with username: ${req.params.username}`);
       return;
     }
+    // Send list of invoices for the customer
     res.status(200).json(customer.invoices);
   } catch (error) {
     console.error(error);
