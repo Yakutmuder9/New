@@ -8,6 +8,7 @@
 */
 import express from "express";
 import Customer from "./../models/ahmedin-customer.js";
+import mongoose from "mongoose";
 const router = express.Router();
 
 /**
@@ -31,10 +32,13 @@ const router = express.Router();
  *             properties:
  *               firstName:
  *                 type: string
+ *                 example: 'Jone'
  *               lastName:
  *                 type: string
+ *                 example: 'Keren'
  *               userName:
  *                 type: string
+ *                 example: 'jone12'
  *             required:
  *               - firstName
  *               - lastName
@@ -69,29 +73,40 @@ router.post("/", async (req, res) => {
 
 /**
  * @openapi
- * /api/customers/:username/invoices :
+ * /api/customers/{username}/invoices :
  *   post:
  *     tags: [Customers]
  *     summary: Creates an invoce by username.
  *     description: Creates an invoce by username.
+ *     parameters:
+ *       - name: username
+ *         in: path
+ *         required: true
+ *         description: The username of the customer to create an invoice for.
+ *         schema:
+ *           type: string
  *     requestBody:
  *       content:
  *         application/json:
  *           schema:
  *             type: object
  *             properties:
- *               username:
- *                 type: string
  *               subtotal:
- *                 type: string
+ *                 type: number
+ *                 example: 78.99
  *               tax:
- *                 type: string
+ *                 type: number
+ *                 example: 5.45
  *               dateCreated:
  *                 type: string
+ *                 example: '12/03/2022'
  *               dateShipped:
  *                 type: string
+ *                 example: '12/10/2022'
  *               lineItems:
- *                 type: []
+ *                 type: array
+ *                 items:
+ *                   type: object
  *     responses:
  *       '200':
  *         description: Customer added to MongoDB.
@@ -111,16 +126,17 @@ router.post("/:username/invoices", async (req, res) => {
         .send(`No customer found with username: ${req.params.username}`);
       return;
     }
+
     const newInvoice = {
-      subtotal: req.body.subtotal,
-      tax: req.body.tax,
+      subtotal: parseFloat(req.body.subtotal),
+      tax: parseFloat(req.body.tax),
       dateCreated: req.body.dateCreated,
       dateShipped: req.body.dateShipped,
       lineItems: req.body.lineItems,
     };
     customer.invoices.push(newInvoice);
     const savedCustomer = await customer.save();
-    res.status(200).json("Customer added to MongoDB", savedCustomer);
+    res.status(200).json(savedCustomer);
   } catch (error) {
     console.error(error);
     if (error instanceof mongoose.Error) {

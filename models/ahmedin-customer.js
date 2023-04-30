@@ -10,26 +10,26 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
-const lineItemSchema = Schema({
+const lineItemSchema = new Schema({
   name: String,
   price: Number,
-  quantity: Number,
+  quantity: Number
 });
 
-const invoice = Schema({
+const invoiceSchema = new Schema({
   subtotal: Number,
   tax: Number,
   dateCreated: String,
   dateShipped: String,
-  linerItems: [lineItemSchema],
+  lineItems: [lineItemSchema]
 });
 
-const customerSchema = Schema({
+const customerSchema = new Schema({
   firstName: String,
   lastName: String,
   userName: String,
-  invoices: [invoice],
+  invoices: [invoiceSchema]
 });
 
-const Customer = mongoose.model("Cusotmer", customerSchema);
+const Customer = mongoose.model('Customer', customerSchema);
 export default Customer;
