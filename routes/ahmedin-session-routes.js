@@ -3,7 +3,7 @@
 ; Title:  app.js
 ; Author: Professor Krasso
 ; Date:   23 Apirl 2023
-; Description: Composer API
+; Description: User's API
 ;===========================================
 */
 

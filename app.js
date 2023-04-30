@@ -16,6 +16,7 @@ import swaggerJSDoc from "swagger-jsdoc";
 import composerRouter from "./routes/ahmedin-composer-routes.js"; 
 import personRouter from "./routes/ahmedin-person-routes.js";
 import userRouter from "./routes/ahmedin-session-routes.js";
+import customerRouter from "./routes/ahmedin-node-shopper-routes.js";
 
 // Middleware
 dotenv.config();
@@ -48,6 +49,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/composers', composerRouter);
 app.use('/api/persons', personRouter);
 app.use('/api', userRouter);
+app.use('/api/customers', customerRouter)
 
 const swaggerOptions = {
   swaggerDefinition: {

@@ -1,3 +1,12 @@
+/*
+============================================
+; Title:  app.js
+; Author: Professor Krasso
+; Date:   23 Apirl 2023
+; Description: User's API
+;===========================================
+*/
+
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
