@@ -46,6 +46,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Redirect requests to /api-docs
+app.get("/", (req, res) => {
+  res.redirect("/api-docs");
+});
+
 // Routes
 app.use("/api/composers", composerRouter);
 app.use("/api/persons", personRouter);
