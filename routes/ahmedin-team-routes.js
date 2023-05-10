@@ -21,7 +21,7 @@ const router = express.Router();
  * @openapi
  * /api/teams:
  *   get:
- *     summary: Returns a list of all teams
+ *     summary: Returns lists of all teams
  *     tags: [Teams]
  *     responses:
  *       200:
@@ -46,7 +46,7 @@ router.get("/", async (req, res) => {
  * @openapi
  * /api/teams/{id}/players:
  *   post:
- *     summary: To assign player to a team
+ *     summary: Assign player to a team
  *     tags: [Teams]
  *     parameters:
  *       - in: path
@@ -134,7 +134,7 @@ router.get("/:id/players", async (req, res) => {
     if (!team) {
       return res.status(404).json({ message: "Cannot find team" });
     }
-    res.json(team);
+    res.json(team.players);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -144,7 +144,7 @@ router.get("/:id/players", async (req, res) => {
  * @openapi
  * /api/teams/{id}:
  *   delete:
- *     summary: Deleter team by Id
+ *     summary: Delete a team by Id
  *     tags: [Teams]
  *     parameters:
  *       - in: path
